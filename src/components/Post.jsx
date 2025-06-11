@@ -21,8 +21,19 @@ export function Post(){
                 <a>#novoprojeto</a>{' '}
                 <a>#nlw</a>{' '}
                 <a> #rocketseat</a>
-
             </div>
+
+
+            <form className={style.comentForm}>
+                <strong>Deixe seu feedback</strong>
+
+                <textarea
+                    placeholder="Deixei um comentário"
+                />
+                <footer>
+                    <button type="submit">Publicar</button>
+                </footer>
+            </form>
         </article>
         
     )
