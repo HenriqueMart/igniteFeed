@@ -1,4 +1,5 @@
 import style from "./Post.module.css";
+import {Comment} from "./Comment.jsx";
 
 export function Post(){
     return(
@@ -16,7 +17,7 @@ export function Post(){
             
             <div className={style.content}>
                 <p>Fala galeraa 👋</p>
-                <p>Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀</p>
+                <p>Acabei de subir mais um projeto no meu portfolio. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀</p>
                 <p>👉 <a href="#">jane.design/doctorcare</a></p>{' '}
                 <a>#novoprojeto</a>{' '}
                 <a>#nlw</a>{' '}
@@ -34,6 +35,12 @@ export function Post(){
                     <button type="submit">Publicar</button>
                 </footer>
             </form>
+
+            <Comment/>
+
+            <div className={style.comentList}>
+                
+            </div>
         </article>
         
     )
