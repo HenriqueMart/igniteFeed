@@ -1,0 +1,16 @@
+.avatar{
+    box-sizing: initial; /*Para fazer caber dentro do tamanho total, mesmo com borda etc..*/
+    width: 3rem;
+    height: 3rem;
+    border-radius: 8px;
+    
+}
+
+.avatarWithBorder{
+    box-sizing: initial; /*Para fazer caber dentro do tamanho total, mesmo com borda etc..*/
+    width: 3rem;
+    height: 3rem;
+    border-radius: 8px;
+    border: 2px solid var(--gray-800);
+    outline: 2px solid var(--green-500);
+}
