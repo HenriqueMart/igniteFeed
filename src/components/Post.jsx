@@ -2,42 +2,85 @@ import style from "./Post.module.css";
 import {Comment} from "./Comment.jsx";
 import {Avatar} from "./Avatar.jsx"
 
-export function Post(props){
+import {format, formatDistanceToNow} from "date-fns";
+import ptBR from "date-fns/locale/pt-BR"
+import { useState } from "react";
+
+
+export function Post({author, publishedAt, content}){
+
+    
+    //Estado = Variáveis que eu quero que o componente monitore 
+    const[comments, setComments] = useState(['Post muito bancana']);
+
+    const[newComments, setNewComments] = useState('');
+
+    const publishedDateformatted = format(publishedAt, " d 'de' LLLL 'as' HH:mm'h'", {
+        locale: ptBR,
+    });
+
+    const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+        locale: ptBR,
+        addSuffix: true
+    });
+
+
+    function handleNewCommentCharge(){
+        setNewComments(event.target.value);
+    }
+
+    function handleCreateNewComment(){
+        event.preventDefault(); // Tirando o redirecionamento do HTML
+
+        //Imutabilidade
+        setComments([...comments, newComments]);
+        setNewComments('');
+
+    }
     return(
         <article className={style.post}>
             <header>
                 <div className={style.author}>
-                    <Avatar hasBorder src="https://avatars.githubusercontent.com/u/77696258?v=4"/>
+                    <Avatar hasBorder src={author.avatarUrl}/>
                     <div className={style.authorInfo}>
-                        <strong>José Henrique</strong>
-                        <span>Web Developer</span>
+                        <strong>{author.name}</strong>
+                        <span>{author.role}</span>
                     </div>    
                  </div>
-                <time title="11 de Maio ás 13h" dateTime="2022-05-11 13:00:32">Publicado há 1h</time>          
+                <time title={publishedDateformatted} dateTime={publishedAt.toISOString()}>
+                     {publishedDateRelativeToNow}
+                </time>          
             </header>
             
             <div className={style.content}>
-                <p>Fala galeraa 👋</p>
-                <p>Acabei de subir mais um projeto no meu portfolio. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀</p>
-                <p>👉 <a href="#">jane.design/doctorcare</a></p>{' '}
-                <a>#novoprojeto</a>{' '}
-                <a>#nlw</a>{' '}
-                <a> #rocketseat</a>
+                {content.map(itens => {
+                    if(itens.type === 'paragraph'){
+                        return <p>{itens.content}</p>
+                    }else if (itens.type === 'link'){
+                        return <p><a href="#">{itens.content}</a></p>
+                    }
+                })}
             </div>
 
 
-            <form className={style.comentForm}>
+            <form  onSubmit={handleCreateNewComment} className={style.comentForm}>
                 <strong>Deixe seu feedback</strong>
 
                 <textarea
+                    name="comment" 
+                    value={newComments}
                     placeholder="Deixei um comentário"
+                    onChange={handleNewCommentCharge}
                 />
                 <footer>
-                    <button type="submit">Publicar</button>
+                    <button
+                    type="submit">Publicar</button>
                 </footer>
             </form>
-
-            <Comment/>
+            {comments.map(itens => {
+                return <Comment content={itens}/>
+            })}
+            
 
             <div className={style.comentList}>
                 
