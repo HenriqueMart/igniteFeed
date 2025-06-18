@@ -11,7 +11,7 @@ export function Post({author, publishedAt, content}){
 
     
     //Estado = Variáveis que eu quero que o componente monitore 
-    const[comments, setComments] = useState(['Post muito bancana']);
+    const[comments, setComments] = useState([{id: 1, content: 'Post Legal!'}]);
 
     const[newComments, setNewComments] = useState('');
 
@@ -25,18 +25,33 @@ export function Post({author, publishedAt, content}){
     });
 
 
-    function handleNewCommentCharge(){
+    function handleNewCommentCharge(event){
         setNewComments(event.target.value);
     }
 
-    function handleCreateNewComment(){
+    function handleCreateNewComment(event){
         event.preventDefault(); // Tirando o redirecionamento do HTML
 
+        const newComment = {
+            id: Date.now(),
+            content: newComments,
+        }
+
         //Imutabilidade
-        setComments([...comments, newComments]);
+        setComments([...comments, newComment]);
         setNewComments('');
 
     }
+
+    function deleteComment(commentToDeleteId){
+        //imutabilidade -> Variável não sofreram alterações, mas um novo valor é alocado
+        const commentsWithoutDeletedOne = comments.filter(comment => {
+            return comment.id !== commentToDeleteId
+        })
+
+        setComments(commentsWithoutDeletedOne);
+    }
+
     return(
         <article className={style.post}>
             <header>
@@ -55,9 +70,9 @@ export function Post({author, publishedAt, content}){
             <div className={style.content}>
                 {content.map(itens => {
                     if(itens.type === 'paragraph'){
-                        return <p>{itens.content}</p>
+                        return <p key={itens.content}>{itens.content}</p>
                     }else if (itens.type === 'link'){
-                        return <p><a href="#">{itens.content}</a></p>
+                        return <p key={itens.content}><a href="#">{itens.content}</a></p>
                     }
                 })}
             </div>
@@ -74,11 +89,18 @@ export function Post({author, publishedAt, content}){
                 />
                 <footer>
                     <button
-                    type="submit">Publicar</button>
+                    type="submit">
+                    Publicar
+                    </button>
                 </footer>
             </form>
             {comments.map(itens => {
-                return <Comment content={itens}/>
+                return (
+                <Comment 
+                    key={itens.id}
+                    content={itens.content} 
+                    onDeleteComment={() => deleteComment(itens.id)}
+                />)
             })}
             
 
