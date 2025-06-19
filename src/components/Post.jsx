@@ -15,6 +15,8 @@ export function Post({author, publishedAt, content}){
 
     const[newComments, setNewComments] = useState('');
 
+    const isNewCommentEmpty = newComments.length === 0;
+
     const publishedDateformatted = format(publishedAt, " d 'de' LLLL 'as' HH:mm'h'", {
         locale: ptBR,
     });
@@ -26,6 +28,7 @@ export function Post({author, publishedAt, content}){
 
 
     function handleNewCommentCharge(event){
+        event.target.setCustomValidity('');
         setNewComments(event.target.value);
     }
 
@@ -41,6 +44,11 @@ export function Post({author, publishedAt, content}){
         setComments([...comments, newComment]);
         setNewComments('');
 
+    }
+
+
+    function handleNewCommentInvalid(){
+        event.target.setCustomValidity('Esse Campo é Obrigatório!');
     }
 
     function deleteComment(commentToDeleteId){
@@ -86,10 +94,14 @@ export function Post({author, publishedAt, content}){
                     value={newComments}
                     placeholder="Deixei um comentário"
                     onChange={handleNewCommentCharge}
+                    onInvalid={handleNewCommentInvalid}
+                    required
                 />
                 <footer>
                     <button
-                    type="submit">
+                    type="submit"
+                    disabled={isNewCommentEmpty}
+                    >
                     Publicar
                     </button>
                 </footer>
@@ -98,8 +110,9 @@ export function Post({author, publishedAt, content}){
                 return (
                 <Comment 
                     key={itens.id}
-                    content={itens.content} 
+                    content={itens.content}
                     onDeleteComment={() => deleteComment(itens.id)}
+                    
                 />)
             })}
             

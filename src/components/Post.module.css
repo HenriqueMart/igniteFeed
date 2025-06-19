@@ -113,6 +113,12 @@
 
 }
 
-.comentForm button[type=submit]:hover{
+.comentForm button[type=submit]:disabled{ 
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+
+.comentForm button[type=submit]:not(:disabled)hover{ /*Realizando uma verificação caso o disabled esteja desabilitado*/
     background: var(--green-300);
 }
