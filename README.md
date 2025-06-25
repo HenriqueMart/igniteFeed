@@ -25,9 +25,9 @@ Este projeto foi desenvolvido com o objetivo de:
 
 ## 📸 Demonstrações
 
-| Tela Inicial | Interações |
-|--------------|-------------|
-| ![Home](link-da-imagem) | ![Interações](link-da-imagem) |
+| Tela Inicial |
+|--------------|
+| ![Home](src\assets\readme\Home.webp) 
 
 ---
 
