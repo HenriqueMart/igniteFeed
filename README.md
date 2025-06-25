@@ -27,7 +27,7 @@ Este projeto foi desenvolvido com o objetivo de:
 
 | Tela Inicial |
 |--------------|
-| ![Home](src\assets\readme\Home.webp) 
+| ![Home](/src/assets/readme/Home.webp) 
 
 ---
 
